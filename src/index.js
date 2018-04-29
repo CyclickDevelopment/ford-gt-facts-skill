@@ -3,9 +3,9 @@
 /**
  * This sample demonstrates a simple skill built with the Amazon Alexa Skills
  * nodejs skill development kit.
- * This sample supports multiple lauguages. (en-US, en-GB, de-DE).
+ * This sample could support multiple lauguages in future by extending the language strings array.
  * The Intent Schema, Custom Slots and Sample Utterances for this skill, as well
- * as testing instructions are located at https://github.com/alexa/skill-sample-nodejs-fact
+ * as testing instructions are inspired by examples at https://github.com/alexa/skill-sample-nodejs-fact
  **/
 
 'use strict';
@@ -88,13 +88,13 @@ const languageStrings = {
 };
 
 const handlers = {
-    'LaunchRequest': function () {
+    'LaunchRequest': () => {
         this.emit('GetFact');
     },
-    'GetNewFactIntent': function () {
+    'GetNewFactIntent': () => {
         this.emit('GetFact');
     },
-    'GetFact': function () {
+    'GetFact': () => {
 
         // Get a random space fact from the space facts list
         // Use this.t() to get corresponding language data
@@ -106,20 +106,24 @@ const handlers = {
         const speechOutput = this.t('GET_FACT_MESSAGE') + randomFact;
         this.emit(':tellWithCard', speechOutput, this.t('SKILL_NAME'), randomFact);
     },
-    'AMAZON.HelpIntent': function () {
+    'AMAZON.HelpIntent': () => {
+        
         const speechOutput = this.t('HELP_MESSAGE');
         const reprompt = this.t('HELP_MESSAGE');
         this.emit(':ask', speechOutput, reprompt);
     },
-    'AMAZON.CancelIntent': function () {
+    'AMAZON.CancelIntent': () => {
+        
         this.emit(':tell', this.t('STOP_MESSAGE'));
     },
-    'AMAZON.StopIntent': function () {
+    'AMAZON.StopIntent': () => {
+        
         this.emit(':tell', this.t('STOP_MESSAGE'));
     },
 };
 
-exports.handler = function (event, context) {
+exports.handler = (event, context) => {
+    
     const alexa = Alexa.handler(event, context);
     alexa.APP_ID = APP_ID;
     // To enable string internationalization (i18n) features, set a resources object.
